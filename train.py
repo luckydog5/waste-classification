@@ -12,7 +12,7 @@ from keras.models import Model
 from keras.optimizers import SGD,Adam
 from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
-from keras.callbacks import EarlyStopping,ModelCheckpoint,LearningRateScheduler,TensorBord,ReduceLROnPlateau
+from keras.callbacks import EarlyStopping,ModelCheckpoint,LearningRateScheduler,TensorBoard,ReduceLROnPlateau
 
 
 img_w = 224
@@ -54,34 +54,34 @@ def parse_arguments():
 	return parser.parse_args()
 
 
-	if __name__ == '__main__':
+if __name__ == '__main__':
 
-		input_shape = (img_h,img_w,3)
-		dropout = 0.2
-		fc_layers = [1024,1024]
-		num_classes = 6
-		epochs = 30
-		args = parse_arguments()
-		train_path = args.train_path
-		train_generator = gen(train_path)
-		model = bulid_model(input_shape=input_shape,dropout=dropout,fc_layers=fc_layers,num_classes=num_classes)
+	input_shape = (img_h,img_w,3)
+	dropout = 0.2
+	fc_layers = [1024,1024]
+	num_classes = 6
+	epochs = 30
+	args = parse_arguments()
+	train_path = args.train_path
+	train_generator = gen(train_path)
+	model = bulid_model(input_shape=input_shape,dropout=dropout,fc_layers=fc_layers,num_classes=num_classes)
 
-		for cls,idx in train_generator.class_indices.items():
-			print('Class #{} = {}'.format(idx,cls))
+	for cls,idx in train_generator.class_indices.items():
+		print('Class #{} = {}'.format(idx,cls))
 
-		checkpoint = ModelCheckpoint(filepath='weights/weights-{epoch:03d}-{val_loss:.2f}.h5',monitor='val_loss',save_best_only=False,save_weights_only=True)
+	checkpoint = ModelCheckpoint(filepath='weights/weights-{epoch:03d}-{val_loss:.2f}.h5',monitor='val_loss',save_best_only=False,save_weights_only=True)
 
-		checkpoint.set_model(model)
+	checkpoint.set_model(model)
 
-		model.compile(optimizer=Adam(lr=1e-5),loss='categorical_crossentropy',metrics=['accuracy'])
+	model.compile(optimizer=Adam(lr=1e-5),loss='categorical_crossentropy',metrics=['accuracy'])
 
-		lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1),cooldown=0,patience=5,min_lr=0.5e-6)
+	lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1),cooldown=0,patience=5,min_lr=0.5e-6)
 
-		earlystopping = EarlyStopping(monitor='val_loss',patience=5,verbose=1)
+	earlystopping = EarlyStopping(monitor='val_loss',patience=5,verbose=1)
 
-		tensorbord = TensorBord(log_dir='weights/logs',write_graph=True)
+	tensorbord = TensorBord(log_dir='weights/logs',write_graph=True)
 
-		model.fit_generator(generator=train_generator,steps_per_epoch=1000,epochs=epochs,initial_epoch=0,callbacks=[checkpoint,lr_reducer,earlystopping,tensorbord])
+	model.fit_generator(generator=train_generator,steps_per_epoch=1000,epochs=epochs,initial_epoch=0,callbacks=[checkpoint,lr_reducer,earlystopping,tensorbord])
 
 
 
