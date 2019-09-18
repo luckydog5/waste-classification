@@ -105,7 +105,7 @@ def conv_block(input_tensor,kernel_size,filters,stage,block,strides=(2,2)):
 	x = Activation('relu')(x)
 	return x
 
-def ResNet50(input_shape=None):
+def ResNet50(input_tensor=None):
 	"""
 	Input: input image shape e.g.(224,224,3)
 
@@ -118,8 +118,7 @@ def ResNet50(input_shape=None):
 	else:
 		bn_axis = 1
 
-	img_input = Input(shape=input_shape)
-	x = ZeroPadding2D((3,3))(img_input)
+	x = ZeroPadding2D((3,3))(input_tensor)
 	x = Conv2D(64,(7,7),strides=(2,2),name='conv1')(x)
 	x = BatchNormalization(axis=bn_axis,name='bn_conv1')(x)
 	x = Activation('relu')(x)
