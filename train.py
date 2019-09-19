@@ -83,7 +83,7 @@ if __name__ == '__main__':
 
 	model.compile(optimizer=Adam(lr=1e-5),loss='categorical_crossentropy',metrics=['accuracy'])
 
-	lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1),cooldown=0,patience=5,min_lr=0.5e-6)
+	lr_reducer = ReduceLROnPlateau(monitor='loss',factor=np.sqrt(0.1),cooldown=0,patience=2,min_lr=0.5e-6)
 
 	earlystopping = EarlyStopping(monitor='loss',patience=5,verbose=1)
 

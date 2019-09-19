@@ -1,7 +1,7 @@
 from keras.preprocessing import image
 
-from train import build_model
-
+from train import bulid_model
+import os
 import glob
 import numpy as np 
 
@@ -12,11 +12,11 @@ if __name__ == '__main__':
 	input_shape = (224,224,3)
 	fc_layers = [1024,1024]
 	num_classes = 6
-	image_path = ''
-	weights_path = ''
-	cls_list = []
+	image_path = 'test/'
+	weights_path = 'weights/weights-030-0.01.h5'
 	images = glob.glob(image_path+'*.jpg')
-	model = build_model(input_shape=input_shape,dropout=0,fc_layers=fc_layers,num_classes=num_classes)
+	cls_list = ['cardboard','glass','metal','paper','plastic','trash']
+	model = bulid_model(input_shape=input_shape,dropout=0,fc_layers=fc_layers,num_classes=num_classes)
 	model.load_weights(weights_path)
 	for f in images:
 		img = image.load_img(f,target_size=(img_h,img_w))
