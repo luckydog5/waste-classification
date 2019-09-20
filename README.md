@@ -27,3 +27,6 @@ python train.py --train_path path_to_your_images
 I haven't implemented validation during the training time,you can implement it by yourself if you like.
 
 
+# pre
+
+The model weights reside in weights path, you can use the bese model weights to predict or test your image.
