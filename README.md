@@ -14,3 +14,4 @@ Then, i add two fc-layers.
 
 Finally, i add one classification layers with output classes six.
 
+==Train==
