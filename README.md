@@ -29,4 +29,9 @@ I haven't implemented validation during the training time,you can implement it b
 
 # pre
 
-The model weights reside in weights path, you can use the bese model weights to predict or test your image.
+The model weights reside in weights path, you can use the best model weights to predict or test your image.
+For example:
+step1: put image in 'test/' dir.
+step2: specify weights path '/**/' like 'weights/weights-030-0.01.h5'
+step3: turn origin image into a tensor.
+step4: wait and check the result.
